@@ -6,6 +6,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
+    kotlin("plugin.noarg") version "1.9.23"
+    kotlin("plugin.allopen") version "1.9.23"
 }
 
 group = "kr.j_jun"
@@ -22,9 +24,23 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
+}
+//
+//noArg {
+//    annotation("jakarta.persistence.Entity")
+//    annotation("jakarta.persistence.MappedSuperclass")
+//    annotation("jakarta.persistence.Embeddable")
+//}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
