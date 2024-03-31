@@ -7,4 +7,9 @@ class User {
         val password: String,
         val nickname: String
     )
+
+    data class Login(
+        val userId: String,
+        val password: String,
+    )
 }

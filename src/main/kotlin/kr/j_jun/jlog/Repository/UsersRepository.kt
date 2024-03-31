@@ -5,4 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 
 interface UsersRepository: MongoRepository<Users, String> {
+
+    fun getByUserId(userId: String): Users?
 }

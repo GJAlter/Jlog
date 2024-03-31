@@ -5,6 +5,7 @@ import kr.j_jun.jlog.DTO.User
 import kr.j_jun.jlog.Service.AuthenticationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController

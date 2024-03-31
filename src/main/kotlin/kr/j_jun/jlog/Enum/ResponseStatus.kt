@@ -8,7 +8,7 @@ package kr.j_jun.jlog.Enum
 enum class ResponseStatus(val statusCode: Int, val msg: String) {
 
     FAILED(100, "기타 오류"),
-    CLASS_NOT_FOUND(101, "클래스 경로 오류"),
+    DATA_NOT_FOUND(101, "데이터 오류"),
 
     OK(200, "정상 처리")
 }
