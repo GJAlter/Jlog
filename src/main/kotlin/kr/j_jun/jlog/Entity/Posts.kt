@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.util.Date
 
 @Document(collection = "post")
-class Post(
+class Posts(
     @Id
     val id: Int,
     var userId: String,
