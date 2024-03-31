@@ -21,7 +21,7 @@ class WebSecurityConfig {
             it.disable()
         }
         http.authorizeHttpRequests { authorizeRequests ->
-            authorizeRequests.requestMatchers("/register", "/**").permitAll().anyRequest().authenticated()
+            authorizeRequests.requestMatchers("/register").permitAll().anyRequest().authenticated()
         }.formLogin { login ->
             login.usernameParameter("userId")
                 .passwordParameter("password")

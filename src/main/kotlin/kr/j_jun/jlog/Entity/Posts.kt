@@ -4,15 +4,15 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.Date
 
-@Document(collection = "post")
+@Document(collection = "posts")
 class Posts(
     @Id
-    val id: Int,
+    var id: String? = null,
     var userId: String,
     var title: String,
     var content: String,
     var createdDatetime: Date = Date(),
     var modifiedDatetime: Date = Date(),
-    var comments: List<Any>
+    var comments: List<Any> = listOf()
 ) {
 }

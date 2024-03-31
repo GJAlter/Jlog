@@ -25,7 +25,9 @@ class ErrorController {
             else -> ResponseStatus.FAILED
         }
 
-        exception.printStackTrace()
+        if(exception !is NoResourceFoundException) {
+            exception.printStackTrace()
+        }
 
         return Response(exceptionType, exception.message)
     }
