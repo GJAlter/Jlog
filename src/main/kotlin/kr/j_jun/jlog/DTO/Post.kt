@@ -1,8 +1,8 @@
 package kr.j_jun.jlog.DTO
 
-class Content {
+class Post {
 
-    data class Content(
+    data class Post(
         var title: String,
         var content: String,
     )

@@ -4,8 +4,8 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.Date
 
-@Document(collection = "contents")
-class Contents(
+@Document(collection = "post")
+class Post(
     @Id
     val id: Int,
     var userId: String,
