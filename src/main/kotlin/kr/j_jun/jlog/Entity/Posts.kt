@@ -13,6 +13,7 @@ class Posts(
     var content: String,
     var createdDatetime: Date = Date(),
     var modifiedDatetime: Date = Date(),
-    var comments: List<Any> = listOf()
+    var comments: List<Any>? = null,
+    var attaches: List<String>? = null,
 ) {
 }
