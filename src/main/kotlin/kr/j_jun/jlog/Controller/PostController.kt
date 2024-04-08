@@ -3,6 +3,8 @@ package kr.j_jun.jlog.Controller
 import kr.j_jun.jlog.DTO.Post
 import kr.j_jun.jlog.DTO.Response
 import kr.j_jun.jlog.Service.PostService
+import org.springframework.core.io.Resource
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.GetMapping
@@ -33,6 +35,13 @@ class PostController(private val service: PostService) {
         @PathVariable("id") postId: String,
     ): Response {
         return service.getPost(postId)
+    }
+
+    @GetMapping("/download")
+    fun download(
+        @RequestParam("f") fileName: String,
+    ): ResponseEntity<Resource> {
+        return service.download(fileName)
     }
 
     @PostMapping

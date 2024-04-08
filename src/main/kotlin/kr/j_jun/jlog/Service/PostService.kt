@@ -9,12 +9,18 @@ import kr.j_jun.jlog.Repository.PostsRepository
 import kr.j_jun.jlog.Util.CommonUtil.Companion.toMap
 import kr.j_jun.jlog.Util.CommonUtil.Companion.toPage
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.Resource
+import org.springframework.core.io.UrlResource
 import org.springframework.data.domain.PageRequest
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.net.URLEncoder
 import java.nio.file.Paths
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -39,6 +45,17 @@ class PostService(
         val post = postsRepo.findById(id).getOrNull()?: throw Exceptions.DataNotFoundException("게시글을 찾을 수 없습니다.")
 
         return Response(ResponseStatus.OK, Post.toDetail(post))
+    }
+
+    fun download(fileName: String): ResponseEntity<Resource> {
+        val file = File("$uploadPath${File.separator}$fileName")
+        val urlEncoded = URLEncoder.encode(fileName.split("_", limit = 2)[1], "UTF-8")
+
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=$urlEncoded")
+            .header(HttpHeaders.CONTENT_LENGTH, file.length().toString())
+            .body(UrlResource(file.toURI()))
     }
 
     fun newPost(user: UserDetails, post: Post.Post): Response {
