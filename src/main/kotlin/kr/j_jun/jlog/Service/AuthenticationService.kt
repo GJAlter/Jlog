@@ -6,6 +6,8 @@ import kr.j_jun.jlog.Entity.Users
 import kr.j_jun.jlog.Enum.ResponseStatus
 import kr.j_jun.jlog.Exceptions
 import kr.j_jun.jlog.Repository.UsersRepository
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -15,6 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 @Service
 class AuthenticationService(
     private val passwordEncoder: PasswordEncoder,
+    private val authManagerBuilder: AuthenticationManagerBuilder,
     private val usersRepo: UsersRepository
 ): UserDetailsService {
 

@@ -21,11 +21,15 @@ class WebSecurityConfig {
             it.disable()
         }
         http.authorizeHttpRequests { authorizeRequests ->
-            authorizeRequests.requestMatchers("/register").permitAll().anyRequest().authenticated()
+            authorizeRequests.requestMatchers("/register").permitAll().requestMatchers("/login").permitAll().anyRequest().authenticated()
         }.formLogin { login ->
             login.usernameParameter("userId")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/", true)
+        }
+
+        http.sessionManagement {
+            it.maximumSessions(1).maxSessionsPreventsLogin(false)
         }
 
         return http.build()
