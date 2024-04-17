@@ -1,5 +1,7 @@
 package kr.j_jun.jlog.Service
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpSession
 import kr.j_jun.jlog.DTO.Response
 import kr.j_jun.jlog.DTO.User
 import kr.j_jun.jlog.Entity.Users
@@ -19,7 +21,7 @@ class AuthenticationService(
     private val passwordEncoder: PasswordEncoder,
     private val authManagerBuilder: AuthenticationManagerBuilder,
     private val usersRepo: UsersRepository
-): UserDetailsService {
+) {
 
     fun register(user: User.Register): Response {
         usersRepo.save(Users(
@@ -31,12 +33,23 @@ class AuthenticationService(
         return Response(ResponseStatus.OK)
     }
 
-    override fun loadUserByUsername(username: String): UserDetails {
-        val user = usersRepo.findById(username).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을수 없습니다.")
+    fun login(req: HttpServletRequest, user: User.Login): Response {
+        println("test")
+        val u = usersRepo.findById(user.userId).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
+        if(!passwordEncoder.matches(user.password, u.pw)) {
+            throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
+        }
 
-        return org.springframework.security.core.userdetails.User.builder()
-            .username(user.userId)
-            .password(user.password)
-            .build()
+        val session = req.getSession(true)
+        session.setAttribute("userId", u.userId)
+
+        return Response(ResponseStatus.OK)
     }
+
+    fun checkLogin(userId: String): Response {
+        val u = usersRepo.findById(userId).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
+
+        return Response(ResponseStatus.OK, u.userId)
+    }
+
 }

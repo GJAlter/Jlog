@@ -13,33 +13,4 @@ class Users(
     var pw: String,
     var nickname: String,
     var createdDatetime: Date = Date()
-): UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? {
-        return null
-    }
-
-    override fun getPassword(): String {
-        return pw
-    }
-
-    override fun getUsername(): String {
-        return userId
-    }
-
-    override fun isAccountNonExpired(): Boolean {
-        return true
-    }
-
-    override fun isAccountNonLocked(): Boolean {
-        return true
-    }
-
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
-
-    override fun isEnabled(): Boolean {
-        return true
-    }
-
-}
+)

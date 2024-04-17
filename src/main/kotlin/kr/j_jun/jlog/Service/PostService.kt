@@ -33,8 +33,8 @@ class PostService(
     @Value("\${kr.j_jun.jlog.value.attach-upload-path}")
     lateinit var uploadPath: String
 
-    fun getMyPosts(user: UserDetails, page: Int?): Response {
-        val posts = postsRepo.getAllByUserId(user.username, PageRequest.of(page.toPage(), 10)).map {
+    fun getMyPosts(userId: String, page: Int?): Response {
+        val posts = postsRepo.getAllByUserId(userId, PageRequest.of(page.toPage(), 10)).map {
             Post.toItem(it)
         }
 
@@ -58,9 +58,9 @@ class PostService(
             .body(UrlResource(file.toURI()))
     }
 
-    fun newPost(user: UserDetails, post: Post.Post): Response {
+    fun newPost(userId: String, post: Post.Post): Response {
         val id = postsRepo.save(Posts(
-            userId = user.username,
+            userId = userId,
             title = post.title,
             content = post.content,
             attaches = post.attaches
@@ -69,7 +69,7 @@ class PostService(
         return Response(ResponseStatus.OK, id)
     }
 
-    fun attachFile(user: UserDetails, files: List<MultipartFile>): Response {
+    fun attachFile(userId: String, files: List<MultipartFile>): Response {
         val newFileNames = ArrayList<String>()
         files.forEach { file ->
             var originalFileName = file.originalFilename
@@ -86,8 +86,8 @@ class PostService(
         return Response(ResponseStatus.OK, newFileNames)
     }
 
-    fun updatePost(user: UserDetails, postId: String, data: Post.Update): Response {
-        val post = postsRepo.getByIdAndUserId(postId, user.username)?: throw Exceptions.DataNotFoundException("게시글을 찾을 수 없습니다.")
+    fun updatePost(userId: String, postId: String, data: Post.Update): Response {
+        val post = postsRepo.getByIdAndUserId(postId, userId)?: throw Exceptions.DataNotFoundException("게시글을 찾을 수 없습니다.")
         post.apply {
             title = data.title
             content = data.content
