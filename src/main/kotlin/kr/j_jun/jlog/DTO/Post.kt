@@ -50,7 +50,7 @@ class Post {
                 id = post.id!!,
                 userId = post.userId,
                 title = post.title,
-                content = if(post.content.length > 50) "${post.content.substring(0, 50)}..." else post.content,
+                content = post.content,
                 modifiedDatetime = post.modifiedDatetime,
                 attaches = post.attaches,
                 comments = post.comments
