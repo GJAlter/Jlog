@@ -9,4 +9,5 @@ interface PostsRepository: MongoRepository<Posts, String> {
 
     fun getByIdAndUserId(id: String, userId: String): Posts?
     fun getAllByUserId(userId: String, pageRequest: PageRequest): Page<Posts>
+    fun getAllByUserIdOrderByModifiedDatetimeDesc(userId: String, pageRequest: PageRequest): Page<Posts>
 }

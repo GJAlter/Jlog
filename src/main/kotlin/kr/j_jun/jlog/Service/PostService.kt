@@ -34,7 +34,7 @@ class PostService(
     lateinit var uploadPath: String
 
     fun getMyPosts(userId: String, page: Int?): Response {
-        val posts = postsRepo.getAllByUserId(userId, PageRequest.of(page.toPage(), 10)).map {
+        val posts = postsRepo.getAllByUserIdOrderByModifiedDatetimeDesc(userId, PageRequest.of(page.toPage(), 10)).map {
             Post.toItem(it)
         }
 
@@ -84,6 +84,26 @@ class PostService(
         }
 
         return Response(ResponseStatus.OK, newFileNames)
+    }
+
+    fun deleteFile(userId: String, postId: String, files: List<String>): Response {
+        val post = postsRepo.getByIdAndUserId(postId, userId)?: throw Exceptions.DataNotFoundException("게시글을 찾을 수 없습니다.")
+        if(post.attaches == null) throw Exceptions.DataNotFoundException("파일을 찾을 수 없습니다.")
+
+        val postAttaches = post.attaches!!.toMutableList()
+        files.forEach { name ->
+            if(post.attaches!!.indexOf(name) > 0) {
+                val file = File("$uploadPath${File.separator}$name")
+                file.delete()
+                postAttaches.remove(name)
+            }
+        }
+
+        post.attaches = postAttaches
+
+        postsRepo.save(post)
+
+        return Response(ResponseStatus.OK)
     }
 
     fun updatePost(userId: String, postId: String, data: Post.Update): Response {

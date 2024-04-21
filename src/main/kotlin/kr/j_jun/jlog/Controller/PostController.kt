@@ -49,7 +49,16 @@ class PostController(private val service: PostService) {
         @SessionAttribute(name = "userId", required = true) userId: String,
         @RequestPart("file") file: List<MultipartFile>
     ): Response {
-       return service.attachFile(userId, file)
+        return service.attachFile(userId, file)
+    }
+
+    @DeleteMapping("/{id}/file")
+    fun deleteFile(
+        @SessionAttribute(name = "userId", required = true) userId: String,
+        @PathVariable("id") postId: String,
+        @RequestBody files: List<String>
+    ): Response {
+        return service.deleteFile(userId, postId, files)
     }
 
     @PatchMapping("/{id}")

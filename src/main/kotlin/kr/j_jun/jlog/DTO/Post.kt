@@ -34,6 +34,11 @@ class Post {
         var attaches: List<String>? = null
     )
 
+    data class DeleteAttach(
+        var id: String,
+        var fileNames: List<String>
+    )
+
     companion object {
 
         fun toItem(post: Posts): Item {
