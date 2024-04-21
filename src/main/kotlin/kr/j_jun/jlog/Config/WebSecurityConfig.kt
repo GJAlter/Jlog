@@ -34,10 +34,11 @@ class WebSecurityConfig: WebMvcConfigurer {
         http.csrf{
             it.disable()
         }
-        http.authorizeHttpRequests { authorizeRequests ->
-            authorizeRequests.requestMatchers("/register").permitAll().requestMatchers("/**").permitAll().anyRequest().authenticated()
-        }.formLogin { login ->
+        .formLogin { login ->
             login.disable()
+        }
+        .logout { logout ->
+            logout.disable()
         }
 
         http.sessionManagement {

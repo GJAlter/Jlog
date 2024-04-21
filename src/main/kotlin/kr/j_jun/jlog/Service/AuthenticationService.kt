@@ -34,7 +34,6 @@ class AuthenticationService(
     }
 
     fun login(req: HttpServletRequest, user: User.Login): Response {
-        println("test")
         val u = usersRepo.findById(user.userId).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
         if(!passwordEncoder.matches(user.password, u.pw)) {
             throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
@@ -42,6 +41,12 @@ class AuthenticationService(
 
         val session = req.getSession(true)
         session.setAttribute("userId", u.userId)
+
+        return Response(ResponseStatus.OK)
+    }
+
+    fun logout(req: HttpServletRequest): Response {
+        req.getSession(false).invalidate()
 
         return Response(ResponseStatus.OK)
     }

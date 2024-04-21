@@ -24,6 +24,13 @@ class AuthenticationController(private val service: AuthenticationService) {
         return service.login(req, user)
     }
 
+    @PostMapping("/logout")
+    fun logout(
+        req: HttpServletRequest
+    ): Response {
+        return service.logout(req)
+    }
+
     @GetMapping("/check")
     fun checkLogin(
         @SessionAttribute(name = "userId", required = true) userId: String
