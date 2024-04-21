@@ -12,5 +12,6 @@ class Users(
     val userId: String,
     var pw: String,
     var nickname: String,
+    var notion: String,
     var createdDatetime: Date = Date()
 )

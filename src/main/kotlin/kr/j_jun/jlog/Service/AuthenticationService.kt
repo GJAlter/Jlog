@@ -24,10 +24,15 @@ class AuthenticationService(
 ) {
 
     fun register(user: User.Register): Response {
+        val checkDuplicate = (checkDuplicate(user.id, user.nickname))
+        if((checkDuplicate.body as Response.ResponseData).statusCode != 200) {
+            return checkDuplicate
+        }
         usersRepo.save(Users(
             userId = user.id,
             pw = passwordEncoder.encode(user.password),
-            nickname = user.nickname
+            nickname = user.nickname,
+            notion = user.notion
         ))
 
         return Response(ResponseStatus.OK)
@@ -62,7 +67,13 @@ class AuthenticationService(
     fun checkLogin(userId: String): Response {
         val u = usersRepo.findById(userId).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
 
-        return Response(ResponseStatus.OK, u.userId)
+        return Response(ResponseStatus.OK, u.nickname)
+    }
+
+    fun getNotionId(userId: String): Response {
+        val u = usersRepo.findById(userId).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
+
+        return Response(ResponseStatus.OK, u.notion)
     }
 
 }

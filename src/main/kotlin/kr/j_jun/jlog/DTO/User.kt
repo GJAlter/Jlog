@@ -5,7 +5,8 @@ class User {
     data class Register(
         val id: String,
         val password: String,
-        val nickname: String
+        val nickname: String,
+        val notion: String
     )
 
     data class Login(

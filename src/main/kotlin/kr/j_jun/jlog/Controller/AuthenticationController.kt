@@ -45,4 +45,11 @@ class AuthenticationController(private val service: AuthenticationService) {
     ): Response {
         return service.checkLogin(userId)
     }
+
+    @GetMapping("/notion")
+    fun getNotionId(
+        @SessionAttribute(name = "userId", required = true) userId: String
+    ): Response {
+        return service.getNotionId(userId)
+    }
 }
