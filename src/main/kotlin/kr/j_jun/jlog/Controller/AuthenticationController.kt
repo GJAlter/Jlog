@@ -16,6 +16,14 @@ class AuthenticationController(private val service: AuthenticationService) {
         return service.register(register)
     }
 
+    @GetMapping("/duplicate")
+    fun checkDuplicateId(
+        @RequestParam("id") userId: String?,
+        @RequestParam("nickname") nickname: String?
+    ): Response {
+        return service.checkDuplicate(userId, nickname)
+    }
+
     @PostMapping("/login")
     fun login(
         req: HttpServletRequest,

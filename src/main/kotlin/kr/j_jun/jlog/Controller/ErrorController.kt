@@ -22,6 +22,7 @@ class ErrorController {
 
         val exceptionType = when(exception) {
             is Exceptions.DataNotFoundException -> ResponseStatus.DATA_NOT_FOUND
+            is Exceptions.DuplicateException -> ResponseStatus.DUPLICATE_DATA
             else -> ResponseStatus.FAILED
         }
 

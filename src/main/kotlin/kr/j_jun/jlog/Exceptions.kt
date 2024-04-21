@@ -6,4 +6,6 @@ package kr.j_jun.jlog
 class Exceptions {
 
     class DataNotFoundException(msg: String): Exception(msg)
+
+    class DuplicateException(msg: String): Exception(msg)
 }

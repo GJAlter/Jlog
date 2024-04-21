@@ -6,4 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 interface UsersRepository: MongoRepository<Users, String> {
 
+    fun existsByNickname(nickname: String): Boolean
+
 }

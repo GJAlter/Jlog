@@ -33,6 +33,14 @@ class AuthenticationService(
         return Response(ResponseStatus.OK)
     }
 
+    fun checkDuplicate(userId: String?, nickname: String?): Response {
+        if(userId != null && usersRepo.existsById(userId)) throw Exceptions.DuplicateException("아이디가 중복되었습니다.")
+        if(nickname != null && usersRepo.existsByNickname(nickname)) throw Exceptions.DuplicateException("닉네임이 중복되었습니다.")
+
+        return Response(ResponseStatus.OK)
+    }
+
+
     fun login(req: HttpServletRequest, user: User.Login): Response {
         val u = usersRepo.findById(user.userId).getOrNull()?: throw Exceptions.DataNotFoundException("사용자를 찾을 수 없습니다.")
         if(!passwordEncoder.matches(user.password, u.pw)) {

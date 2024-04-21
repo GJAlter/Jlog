@@ -9,6 +9,7 @@ enum class ResponseStatus(val statusCode: Int, val msg: String) {
 
     FAILED(100, "기타 오류"),
     DATA_NOT_FOUND(101, "데이터 오류"),
+    DUPLICATE_DATA(102, "중복 오류"),
 
     OK(200, "정상 처리")
 }
