@@ -19,7 +19,7 @@ class WebSecurityConfig: WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000", "http://j-jun.com")
+            .allowedOrigins("http://localhost:3000", "http://j-jun.com:3000")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
             .allowedHeaders("*")
             .allowCredentials(true)
